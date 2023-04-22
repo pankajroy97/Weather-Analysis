@@ -50,15 +50,33 @@ corresponding cities.
 
 Select p.CITY,i.ID,i.MONTH,i.TEMP_F,i.RAIN_I from station p inner join STATS i on p.ID=i.ID order by RAIN_I,MONTH desc;
 
-Q9. Execute a query to look at temperatures for July from table STATS, lowest temperatures first, picking up city name and latitude.
+#Q9. Execute a query to look at temperatures for July from table STATS, lowest temperatures first, picking up city name and latitude.
 
 Select p.CITY,p.LAT_N,i.TEMP_F from station p inner join STATS i on p.ID=i.ID where month=7;
 Select min(TEMP_F) as “lowest_temperature" from (select p.city,p.LAT_N,i.TEMP_F from STATION p inner join STATS i on p.ID=i.ID where month=7)
 
-Q10. Execute a query to show MAX and MIN temperatures as well as average rainfall for each city.
+#Q10. Execute a query to show MAX and MIN temperatures as well as average rainfall for each city.
 
 Select CITY,max(TEMP_F) as “MAX TEMPERATURE”,min(TEMP_F) as “MIN TEMPERATURE”,avg(RAIN_I) as “Average Rainfall” from station p inner join STATS i on p.id=i.id group by city;
 
-Q11. Execute a query to display each city’s monthly temperature in Celcius and rainfall in Centimeter.
+#Q11. Execute a query to display each city’s monthly temperature in Celcius and rainfall in Centimeter.
 
 Select city,month,temp_f,0.556*(temp_f-32) as “Temperaturein Celcius”,Rain_I,( Rain_I*2.54) as “Rainfall in Centimeter” from station p inner join stats I on p.ID=i.ID;
+
+#Q12. Update all rows of table STATS to compensate for faulty rain gauges known to read 0.01 inches low.
+
+Select t.*,(RAIN_I+0.01)as “RAIN_I 0.01 inches low” from STATS t;
+
+#Q13. Update Denver's July temperature reading as 74.9
+
+Update STATS set TEMP_F =74.9 where ID=44 and MONTH=7;
+Select CITY,MONTH,TEMP_F from station p inner join STATS i on p.ID=i.ID where CITY=’DENVER’ and month=7;
+
+
+
+
+
+
+
+
+
