@@ -48,12 +48,17 @@ Select CITY,MONTH,TEMP_F from Station p inner join STATS i on p.ID=i.ID;
 #Q8. Execute a query to look at the table STATS, ordered by month and greatest rainfall, with columns rearranged. It should also show the
 corresponding cities.
 
-Select p.CITY,i.ID,i.MONTH,i.TEMP_F,i.RAIN_I from station p inner join STATS i on p.ID=i.ID order by RAIN_I desc;
+Select p.CITY,i.ID,i.MONTH,i.TEMP_F,i.RAIN_I from station p inner join STATS i on p.ID=i.ID order by RAIN_I,MONTH desc;
 
+Q9. Execute a query to look at temperatures for July from table STATS, lowest temperatures first, picking up city name and latitude.
 
+Select p.CITY,p.LAT_N,i.TEMP_F from station p inner join STATS i on p.ID=i.ID where month=7;
+Select min(TEMP_F) as “lowest_temperature" from (select p.city,p.LAT_N,i.TEMP_F from STATION p inner join STATS i on p.ID=i.ID where month=7)
 
+Q10. Execute a query to show MAX and MIN temperatures as well as average rainfall for each city.
 
+Select CITY,max(TEMP_F) as “MAX TEMPERATURE”,min(TEMP_F) as “MIN TEMPERATURE”,avg(RAIN_I) as “Average Rainfall” from station p inner join STATS i on p.id=i.id group by city;
 
+Q11. Execute a query to display each city’s monthly temperature in Celcius and rainfall in Centimeter.
 
-
-
+Select city,month,temp_f,0.556*(temp_f-32) as “Temperaturein Celcius”,Rain_I,( Rain_I*2.54) as “Rainfall in Centimeter” from station p inner join stats I on p.ID=i.ID;
