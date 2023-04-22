@@ -1,0 +1,59 @@
+# Q1. Create a table “Station” to store information about weather observation stations:
+
+create table Station( 
+ID NUMBER NOT NULL, 
+CITY CHAR(20) NOT NULL, 
+STATE CHAR(2) NOT NULL, 
+LAT_N NUMBER NOT NULL, 
+LONG_W NUMBER NOT NULL, 
+PRIMARY KEY (ID) 
+);
+
+#Q2. Insert the following records into the table:
+
+insert into Station values (13,'PHOENIX','AZ',33,112);
+insert into Station values (44,'DENVER','CO',40,105);
+insert into Station values (66,'CARIBOU','ME',47,68);
+
+#Q3. Execute a query to look at table STATION in undefined order.
+
+select * from Station;
+
+#Q4. Execute a query to select Northern stations (Northern latitude >39.7).
+
+SELECT * FROM STATION WHERE LAT_N>39.7
+
+#Q5. Create another table, ‘STATS’, to store normalized temperature and precipitation data:(There will be no Duplicate ID and MONTH combination.)
+
+CREATE TABLE STATS( 
+ID NUMBER NOT NULL, 
+MONTH NUMBER(1,12) NOT NULL, 
+TEMP_F NUMBER(-80,150) NOT NULL, 
+RAIN_I NUMBER(0,100) NOT NULL 
+)
+
+#Q6.Populate the table STATS with some statistics for January and July:
+
+INSERT INTO STATS VALUES (13,1,57.4,.31);
+INSERT INTO STATS VALUES (13,7,91.7,5.51);
+INSERT INTO STATS VALUES (44,1,27.3,.18);
+INSERT INTO STATS VALUES (44,7,74.8,2.11);
+INSERT INTO STATS VALUES (66,1,6.7,2.1);
+INSERT INTO STATS VALUES (66,7,65.8,4.52);
+
+#Q7. Execute a query to display temperature stats (from STATS table) for each city (from Station table).
+
+Select CITY,MONTH,TEMP_F from Station p inner join STATS i on p.ID=i.ID;
+
+#Q8. Execute a query to look at the table STATS, ordered by month and greatest rainfall, with columns rearranged. It should also show the
+corresponding cities.
+
+Select p.CITY,i.ID,i.MONTH,i.TEMP_F,i.RAIN_I from station p inner join STATS i on p.ID=i.ID order by RAIN_I desc;
+
+
+
+
+
+
+
+
